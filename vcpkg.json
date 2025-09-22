@@ -1,7 +1,7 @@
 {
-  "name": "Plaster",
+  "name": "plaster",
   "version": "1.0.0",
-  "description": "A custom 3D boomer shooter game engine with retro pixelated aesthetics",
+  "description": "A custom 3D game engine",
   "dependencies": [
     "glfw3",
     "glad",
@@ -15,4 +15,3 @@
     "spdlog"
   ]
 }
-

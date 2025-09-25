@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
-project(BoomerEngine VERSION 1.0.0 LANGUAGES CXX)
+
+# Set vcpkg toolchain BEFORE project() call
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+
+project(Plaster VERSION 1.0.0 LANGUAGES CXX)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)

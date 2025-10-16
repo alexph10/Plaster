@@ -8,6 +8,16 @@
     "glm",
     "openal-soft",
     "libsndfile",
+    "volk",
+    "shaderfc",
+    "spirv-tools",
+    "spirv-reflect",
+    "vulkan-memory-allocator",
+    "glm",
+    "stb",
+    "tinyobjloader",
+    "imgui",
+    "gltf-sdk"
     {
       "name": "imgui",
       "features": ["opengl3-binding", "glfw-binding"]

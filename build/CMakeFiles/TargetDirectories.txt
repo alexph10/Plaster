@@ -1,3 +1,3 @@
-C:/Users/Admin/Plaster/build/CMakeFiles/Plaster.dir
-C:/Users/Admin/Plaster/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Admin/Plaster/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/alexy/Plaster/build/CMakeFiles/Plaster.dir
+C:/Users/alexy/Plaster/build/CMakeFiles/edit_cache.dir
+C:/Users/alexy/Plaster/build/CMakeFiles/rebuild_cache.dir

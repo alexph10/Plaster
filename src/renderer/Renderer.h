@@ -5,7 +5,6 @@
 #include <string>
 #include <unordered_map>
 
-
 class Shader;
 class Camera;
 class PostProcessor;
@@ -103,8 +102,13 @@ private:
   glm::mat4 m_viewMatrix;
   glm::mat4 m_projectionMatrix;
 
+  // Basic rendering components (for testing)
+  std::unique_ptr<Shader> m_basicShader;
+  unsigned int m_VAO;
+  unsigned int m_VBO;
+
   // Enhanced pipeline components
-  std::unique_ptr<PostProcessor> m_postProcessor;
+  // std::unique_ptr<PostProcessor> m_postProcessor;  // Disabled for now
   std::shared_ptr<Camera> m_currentCamera;
 
   // Plastiboo-specific framebuffers
@@ -136,4 +140,8 @@ private:
   void UpdateMedievalLighting(float deltaTime);
   void RenderDepthFog();
   void ApplyGrungeOverlay();
+
+  // Basic test triangle functions
+  void CreateTestTriangle();
+  void CleanupTestTriangle();
 };

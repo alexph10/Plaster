@@ -5,13 +5,12 @@
 #include <unordered_map>
 #include <vector>
 
-
 // Forward declarations
 struct PlastibooColor {
   glm::vec3 rgb;
-  float weight;
-  float variance;
-  std::string name;
+  float weight;     // How often this color appears in palette selection
+  float variance;   // How much this color can shift
+  std::string name; // For debugging/UI
 };
 
 // Hash function for enum class
@@ -20,6 +19,7 @@ template <> struct std::hash<enum class PlastibooPaletteType> {
     return std::hash<int>{}(static_cast<int>(t));
   }
 };
+
 enum class PlastibooPaletteType {
   MEDIEVAL_DUNGEON, // Dark browns, muted greens
   ANCIENT_FOREST,   // Deep greens, earthy browns
@@ -30,13 +30,6 @@ enum class PlastibooPaletteType {
   COPPER_RUINS,     // Rust oranges, aged metals
   NIGHTMARE_REALM,  // Shifting, unstable colors
   CUSTOM            // User-defined palette
-};
-
-struct PlastibooColor {
-  glm::vec3 rgb;
-  float weight;     // How often this color appears in palette selection
-  float variance;   // How much this color can shift
-  std::string name; // For debugging/UI
 };
 
 class PlastibooPalette {

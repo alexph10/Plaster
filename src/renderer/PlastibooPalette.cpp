@@ -232,7 +232,7 @@ glm::vec3 PlastibooPalette::ApplyColorEffects(const glm::vec3 &color) const {
 
 // Color space conversion utilities
 glm::vec3 PlastibooPalette::RGBToHSV(const glm::vec3 &rgb) const {
-  float r = rgb.r, g = rgb.g, b = rgb.b;
+  float r = rgb.x, g = rgb.y, b = rgb.z;
   float max = std::max({r, g, b});
   float min = std::min({r, g, b});
   float delta = max - min;

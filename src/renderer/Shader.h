@@ -1,105 +1,91 @@
-#include "Shader.h"
-#include <fstream>
-#include <sstream>
-#include <iostream>
+#pragma once
+
+#include <glad/glad.h>
+#include <string>
+#include <unordered_map>
+#include <memory>
+#include <atomic>
+#include <vector>
 #include <filesystem>
+#include <queue>
+#include <mutex>
+#include <condition_variable>
 
-std::unique_ptr<ShaderCompiler> Shader::s_compiler = nullptr;
+// Forward declarations
+class ShaderCompiler;
+class UniformCache;
 
-Shader::Shader() {
-    if (!s_compiler) s_compiler = std::make_unique<ShaderCompiler>();
-}
-Shader::~Shader() {
-    Destroy();
-}
+// High-performance uniform caching
+class UniformCache {
+public:
+    GLint GetUniformLocation(GLuint program, const std::string& name) const;
+    void CacheUniform(const std::string& name, GLint location);
+    void ClearCache();
+    
+private:
+    mutable std::unordered_map<std::string, GLint> m_cache;
+    mutable std::mutex m_mutex;
+};
 
-bool Shader::LoadFromFilesAsync(const std::string& vertPath, const std::string& fragPath) {
-    m_vertPath = vertPath;
-    m_fragPath = fragPath;
-    m_compileFuture = s_compiler->CompileAsync(ReadFile(vertPath), ReadFile(fragPath));
-    return true;
-}
+// Advanced shader compiler with hot-reloading
+class ShaderCompiler {
+public:
+    bool CompileShader(const std::string& source, GLenum type, GLuint& shader);
+    bool LinkProgram(GLuint vertexShader, GLuint fragmentShader, GLuint& program);
+    bool ValidateProgram(GLuint program);
+    void EnableDebugOutput();
+    
+private:
+    void CheckCompileErrors(GLuint shader, const std::string& type);
+    void CheckLinkErrors(GLuint program);
+    std::atomic<bool> m_debugEnabled{false};
+};
 
-void Shader::CheckAndRecompile() {
-    if (m_compileFuture.valid()) {
-        auto status = m_compileFuture.wait_for(std::chrono::milliseconds(0));
-        if (status == std::future_status::ready) {
-            GLuint programID = m_compileFuture.get();
-            if (programID != 0) {
-                Destroy();
-                m_programID = programID;
-            }
-        }
-    }
-    // Hot reload based on file modification time
-    auto vertTime = std::filesystem::last_write_time(m_vertPath);
-    auto fragTime = std::filesystem::last_write_time(m_fragPath);
-    if (vertTime != m_vertLastWrite || fragTime != m_fragLastWrite) {
-        LoadFromFilesAsync(m_vertPath.string(), m_fragPath.string());
-        m_vertLastWrite = vertTime;
-        m_fragLastWrite = fragTime;
-    }
-}
-
-void Shader::Use() const {
-    glUseProgram(m_programID);
-    CheckAndRecompile();
-}
-
-void Shader::Destroy() {
-    if (m_programID != 0) {
-        glDeleteProgram(m_programID);
-        m_programID = 0;
-    }
-}
-
-// Uniform caching
-void Shader::CacheLocation(const std::string& name, GLint location) {
-    m_uniformLocations[name] = location;
-}
-GLint Shader::GetLocation(const std::string& name) {
-    auto it = m_uniformLocations.find(name);
-    if (it != m_uniformLocations.end()) return it->second;
-    GLint loc = glGetUniformLocation(m_programID, name.c_str());
-    CacheLocation(name, loc);
-    return loc;
-}
-
-void Shader::SetUniform(const std::string& name, float value) const {
-    GLint loc = m_cache.GetLocation(name);
-    if (loc != -1) glUniform1f(loc, value);
-}
-void Shader::SetUniform(const std::string& name, int value) const {
-    GLint loc = m_cache.GetLocation(name);
-    if (loc != -1) glUniform1i(loc, value);
-}
-void Shader::SetUniform(const std::string& name, const glm::vec2& v) const {
-    GLint loc = m_cache.GetLocation(name);
-    if (loc != -1) glUniform2fv(loc, 1, &v[0]);
-}
-void Shader::SetUniform(const std::string& name, const glm::vec3& v) const {
-    GLint loc = m_cache.GetLocation(name);
-    if (loc != -1) glUniform3fv(loc, 1, &v[0]);
-}
-void Shader::SetUniform(const std::string& name, const glm::vec4& v) const {
-    GLint loc = m_cache.GetLocation(name);
-    if (loc != -1) glUniform4fv(loc, 1, &v[0]);
-}
-void Shader::SetUniform(const std::string& name, const glm::mat4& m) const {
-    GLint loc = m_cache.GetLocation(name);
-    if (loc != -1) glUniformMatrix4fv(loc, 1, GL_FALSE, &m[0][0]);
-}
-
-std::string Shader::ReadFile(const std::filesystem::path& filepath) const {
-    std::ifstream file(filepath);
-    if (!file.is_open()) {
-        std::cerr << "Failed to read shader: " << filepath << std::endl;
-        return "";
-    }
-    std::stringstream ss;
-    ss << file.rdbuf();
-    return ss.str();
-}
-
-
-
+class Shader {
+public:
+    Shader();
+    ~Shader();
+    
+    // Async loading and hot-reloading
+    bool LoadFromFilesAsync(const std::string& vertPath, const std::string& fragPath);
+    void CheckAndRecompile();
+    
+    // Core functionality
+    void Use() const;
+    void Destroy();
+    
+    // Uniform setters with caching
+    void SetBool(const std::string& name, bool value);
+    void SetInt(const std::string& name, int value);
+    void SetFloat(const std::string& name, float value);
+    void SetVec2(const std::string& name, float x, float y);
+    void SetVec3(const std::string& name, float x, float y, float z);
+    void SetVec4(const std::string& name, float x, float y, float z, float w);
+    void SetMat4(const std::string& name, const float* value);
+    
+    // Getters
+    GLuint GetProgram() const { return m_program; }
+    bool IsValid() const { return m_program != 0; }
+    
+    // File watching for hot-reload
+    void EnableHotReload(bool enable = true) { m_hotReload = enable; }
+    
+private:
+    GLuint m_program = 0;
+    std::string m_vertexPath;
+    std::string m_fragmentPath;
+    
+    // File watching
+    std::filesystem::file_time_type m_lastVertWrite;
+    std::filesystem::file_time_type m_lastFragWrite;
+    bool m_hotReload = false;
+    
+    // Performance optimizations
+    mutable UniformCache m_uniformCache;
+    static std::unique_ptr<ShaderCompiler> s_compiler;
+    
+    // Helper methods
+    void CacheLocation(const std::string& name, GLint location);
+    GLint GetUniformLocation(const std::string& name);
+    bool LoadShaderFile(const std::string& path, std::string& content);
+};

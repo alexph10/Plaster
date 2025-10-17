@@ -1,23 +1,15 @@
 {
   "name": "plaster",
   "version": "1.0.0",
-  "description": "A custom 3D game engine",
+  "description": "A custom 3D game engine with Plastiboo-style rendering",
   "dependencies": [
     "glfw3",
     "glad",
     "glm",
     "openal-soft",
     "libsndfile",
-    "volk",
-    "shaderfc",
-    "spirv-tools",
-    "spirv-reflect",
-    "vulkan-memory-allocator",
-    "glm",
     "stb",
     "tinyobjloader",
-    "imgui",
-    "gltf-sdk"
     {
       "name": "imgui",
       "features": ["opengl3-binding", "glfw-binding"]

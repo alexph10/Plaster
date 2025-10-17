@@ -19,19 +19,26 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# Find OpenGL
-find_package(OpenGL REQUIRED)
+# Set CMAKE_PREFIX_PATH to find vcpkg packages
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/vcpkg_installed/x64-windows")
 
-# Core source files - now we can include more files with stub headers
+# Find packages
+find_package(Vulkan REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
+find_package(glm CONFIG REQUIRED)
+find_package(spdlog CONFIG REQUIRED)
+find_package(imgui CONFIG REQUIRED)
+
+# Core source files
 file(GLOB_RECURSE SOURCES 
     "src/*.cpp"
     "src/*.h"
 )
 
-# Remove files that require external libraries or have major issues
-list(FILTER SOURCES EXCLUDE REGEX ".*Vulkan.*")
-list(FILTER SOURCES EXCLUDE REGEX ".*VulkanContext.*")
-list(FILTER SOURCES EXCLUDE REGEX ".*Shader.*")  # Exclude until we fix missing members
+# Remove files that have major issues (we'll implement these properly)
+list(FILTER SOURCES EXCLUDE REGEX ".*/Shader\\..*")  # Exclude Shader.cpp and Shader.h specifically
+list(FILTER SOURCES EXCLUDE REGEX ".*/renderer/Renderer\\..*")  # Exclude OpenGL Renderer.cpp and Renderer.h specifically
+list(FILTER SOURCES EXCLUDE REGEX ".*/audio/AudioSystem\\..*")  # Exclude AudioSystem.cpp and AudioSystem.h (OpenAL/libsndfile not linked yet)
 
 # Create executable
 add_executable(${PROJECT_NAME} ${SOURCES})
@@ -39,12 +46,17 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/src
-    ${CMAKE_SOURCE_DIR}/include  # Add our stub headers
+    ${CMAKE_SOURCE_DIR}/include
+    ${Vulkan_INCLUDE_DIRS}
 )
 
-# Link OpenGL
+# Link libraries
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    OpenGL::GL
+    Vulkan::Vulkan
+    glfw
+    glm::glm
+    spdlog::spdlog
+    imgui::imgui
 )
 
 # Set VS debugger working directory

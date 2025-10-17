@@ -3,7 +3,8 @@ add_library(Platform
 )
 
 target_link_libraries(Platform PUBLIC
-    glfw
+    glfw, 
+    Vulkan::Vulkan
 )
 
 target_include_directories(Platform PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

@@ -1,0 +1,10 @@
+C:\Users\Admin\Plaster\src\core\Engine.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\Engine.obj
+C:\Users\Admin\Plaster\src\input\InputManager.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\InputManager.obj
+C:\Users\Admin\Plaster\src\main.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\main.obj
+C:\Users\Admin\Plaster\src\platform\Window.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\Window.obj
+C:\Users\Admin\Plaster\src\renderer\PlastibooPalette.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\PlastibooPalette.obj
+C:\Users\Admin\Plaster\src\renderer\VulkanRenderer.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\VulkanRenderer.obj
+C:\Users\Admin\Plaster\src\scene\Scene.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\Scene.obj
+C:\Users\Admin\Plaster\src\scene\SceneManager.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\SceneManager.obj
+C:\Users\Admin\Plaster\src\ui\ImGuiManager.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\ImGuiManager.obj
+C:\Users\Admin\Plaster\src\ui\ImGuiTheme.cpp;C:\Users\Admin\Plaster\build\Plaster.dir\Debug\ImGuiTheme.obj

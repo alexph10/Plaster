@@ -1,0 +1,297 @@
+Package: vcpkg-cmake-config
+Version: 2024-05-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 8fec41427c53f91196f57ceb5ddc8676ecdf19184e6ba6cdf36e3c45f98d2a25
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: b27e231309b51273514a6a293f876e202f6230eb82f7f8862dbd5868efeac442
+Status: install ok installed
+
+Package: glfw3
+Version: 3.4
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 9bb1a0450e505ab741ef73da35d10a48fad9a22047af07cc6f0c1a032777c3d6
+Description: GLFW is a free, Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan application development. It provides a simple, platform-independent API for creating windows, contexts and surfaces, reading input, handling events, etc.
+Status: install ok installed
+
+Package: glm
+Version: 1.0.1
+Port-Version: 3
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 5bbefbf1be5baa31cc7ca7fc73dca1dabc51c97046352a28afebd7beeec68507
+Description: OpenGL Mathematics (GLM)
+Status: install ok installed
+
+Package: vulkan-headers
+Version: 1.4.309.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: c811bb0788f906376452d65d158a27a7993934ab08d3a0d7df159e393a014a11
+Description: Vulkan header files and API registry
+Status: install ok installed
+
+Package: vulkan-loader
+Version: 1.4.309.0
+Port-Version: 2
+Depends: vcpkg-cmake, vcpkg-cmake-config, vulkan-headers
+Architecture: x64-windows
+Multi-Arch: same
+Abi: f4583d18eeeaf795e535a21d932a35a12f625729740042f6287e74a69e472945
+Description: Vulkan Development Tools
+Status: install ok installed
+
+Package: vulkan
+Version: 2023-12-17
+Depends: vcpkg-cmake, vulkan-headers, vulkan-loader
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 820333b3f87393143051ce23c761875e1bb3a016c04e207cc0a3048e8e042938
+Description: A stub package that ensures that Vulkan headers and a loader are available.
+    On Android, the NDK provides a loader at API level 24 or higher.
+Status: install ok installed
+
+Package: imgui
+Version: 1.91.9
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 4c3d67a11e628cabec9c0350e9b0e7d50aeddb0a0d767c716016cbff1ecdac56
+Description: Bloat-free Immediate Mode Graphical User interface for C++ with minimal dependencies.
+Status: install ok installed
+
+Package: imgui
+Feature: glfw-binding
+Depends: glfw3
+Architecture: x64-windows
+Multi-Arch: same
+Description: Make available GLFW binding
+Status: install ok installed
+
+Package: imgui
+Feature: vulkan-binding
+Depends: vulkan
+Architecture: x64-windows
+Multi-Arch: same
+Description: Make available Vulkan binding
+Status: install ok installed
+
+Package: yasm
+Version: 1.3.0
+Port-Version: 7
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 9a478bd0e1da43294fd4fe7e3f4f455ef60f71af0781e343f5076047a4223df5
+Description: Yasm is a complete rewrite of the NASM assembler under the new BSD License.
+Default-Features: tools
+Status: install ok installed
+
+Package: yasm
+Feature: tools
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build yasm tools
+Status: install ok installed
+
+Package: mpg123
+Version: 1.32.9
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config, yasm
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 9e9fcba4f3106c402ffde25c3dd9a6dda26014acbb308e3737544ec0c657e43b
+Description: mpg123 is a real time MPEG 1.0/2.0/2.5 audio player/decoder for layers 1, 2 and 3 (MPEG 1.0 layer 3 also known as MP3).
+Status: install ok installed
+
+Package: vcpkg-cmake-get-vars
+Version: 2025-05-29
+Depends: vcpkg-cmake
+Architecture: x64-windows
+Multi-Arch: same
+Abi: cdf8e94a87b757fd8bde8d2ae49c8aea3a7a0668042c2e195b9fe139c0456026
+Status: install ok installed
+
+Package: vcpkg-tool-meson
+Version: 1.9.0
+Depends: vcpkg-cmake-get-vars
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 085b2a7ce291f312847bad4ccf3b35f1ba2e9c5820eeeaf1b81519a677068c1d
+Description: Meson build system
+Status: install ok installed
+
+Package: pkgconf
+Version: 2.5.1
+Port-Version: 1
+Depends: vcpkg-tool-meson
+Architecture: x64-windows
+Multi-Arch: same
+Abi: c1e76265c0644cf55e93524bcd8d2bbdb3996ace428913568d480a4152914b98
+Description: pkgconf is a program which helps to configure compiler and linker flags for development libraries. It is similar to pkg-config from freedesktop.org.
+Status: install ok installed
+
+Package: vcpkg-pkgconfig-get-modules
+Version: 2024-04-03
+Depends: pkgconf
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 61322a4b9c847a4a2042707b872a64ab3bc197d76ba892cd795713b2dc34a1a8
+Status: install ok installed
+
+Package: vcpkg-msbuild
+Version: 2023-08-08
+Depends: vcpkg-cmake-get-vars, vcpkg-pkgconfig-get-modules
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 822ae7d7845836f5933bdce345e2821491eb140a63af2d992d5574f78ab40f5c
+Status: install ok installed
+
+Package: mp3lame
+Version: 3.100
+Port-Version: 15
+Depends: vcpkg-msbuild
+Architecture: x64-windows
+Multi-Arch: same
+Abi: c81fc46d00a039082c975213cdfe40c5fd98f367488b976c38091c98bca137b1
+Description: LAME is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+Status: install ok installed
+
+Package: opus
+Version: 1.5.2
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 5b94b5403cb281e3a3170054de9ed313f486015547a94c6a961932f56dacd434
+Description: Totally open, royalty-free, highly versatile audio codec
+Status: install ok installed
+
+Package: libogg
+Version: 1.3.6
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 215f4a5e40cab76991f66d39ebd51c81b41639e27942ba2ac25370547d2ff3bf
+Description: Ogg is a multimedia container format, and the native file and stream format for the Xiph.org multimedia codecs.
+Status: install ok installed
+
+Package: libvorbis
+Version: 1.3.7
+Port-Version: 4
+Depends: libogg, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 1c5c5e11583ec04418e7c51a79a17a96da6ff5c1daaa2d97d6ff552d3e69b612
+Description: Ogg Vorbis is a fully open, non-proprietary, patent-and-royalty-free, general-purpose compressed audio format
+Status: install ok installed
+
+Package: libflac
+Version: 1.5.0
+Depends: libogg, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: b59ec6f8b225049a4fbb5307320d766296f6207787379451ba2bf4eb7e612570
+Description: Library for manipulating FLAC files
+Default-Features: stack-protector
+Status: install ok installed
+
+Package: libflac
+Feature: stack-protector
+Architecture: x64-windows
+Multi-Arch: same
+Description: Build with stack smashing protection
+Status: install ok installed
+
+Package: libsndfile
+Version: 1.2.2
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 4852573cc7ef98133409b568790df42681ea387703d651d6b3fefa0db105fae1
+Description: A library for reading and writing audio files
+Default-Features: external-libs, mpeg
+Status: install ok installed
+
+Package: libsndfile
+Feature: external-libs
+Depends: libflac, libvorbis, opus
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable FLAC, Vorbis, and Opus codecs
+Status: install ok installed
+
+Package: libsndfile
+Feature: mpeg
+Depends: mp3lame, mpg123
+Architecture: x64-windows
+Multi-Arch: same
+Description: Enable MPEG codecs
+Status: install ok installed
+
+Package: fmt
+Version: 11.2.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: e57880f15f6ae542f7df9257340bb8bc52b108e865c194440912878f2f7a0e9f
+Description: {fmt} is an open-source formatting library providing a fast and safe alternative to C stdio and C++ iostreams.
+Status: install ok installed
+
+Package: openal-soft
+Version: 1.24.3
+Port-Version: 1
+Depends: fmt, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 19ddade53c52d5aea411798da7065e885e067cf2373cf7dcc0d557dd8b8c833f
+Description: OpenAL Soft is an LGPL-licensed, cross-platform, software implementation of the OpenAL 3D audio API.
+Status: install ok installed
+
+Package: spdlog
+Version: 1.15.3
+Depends: fmt, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 4b544946f3b6cf78134cd836b7c75e9f5e81ff756685c4d420f8b8bb86223898
+Description: Very fast, header-only/compiled, C++ logging library.
+Status: install ok installed
+
+Package: stb
+Version: 2024-07-29
+Port-Version: 1
+Architecture: x64-windows
+Multi-Arch: same
+Abi: c396187b01ade11d0a38b88cda3fbfc3cd99c9ac1f570c249db09cba5cc49b96
+Description: public domain header-only libraries
+Status: install ok installed
+
+Package: tinyobjloader
+Version: 2.0.0rc13
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 53b556aa3e4847fc94aa13c22f2d9aa167d98d5de6b70236e5f7c8a19b1ef876
+Description: Tiny but powerful single file wavefront obj loader
+Status: install ok installed
+
+Package: vulkan-memory-allocator
+Version: 3.3.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: d64e667305329583a1a9f31efbd368888ecd8b2a6bf3f85ce2c0e3684b8f9b95
+Description: Easy to integrate Vulkan memory allocation library from GPUOpen
+Status: install ok installed
+

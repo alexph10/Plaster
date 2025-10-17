@@ -4,7 +4,8 @@
   "description": "A custom 3D game engine with Plastiboo-style rendering",
   "dependencies": [
     "glfw3",
-    "glad",
+    "vulkan",
+    "vulkan-memory-allocator",
     "glm",
     "openal-soft",
     "libsndfile",
@@ -12,7 +13,7 @@
     "tinyobjloader",
     {
       "name": "imgui",
-      "features": ["opengl3-binding", "glfw-binding"]
+      "features": ["vulkan-binding", "glfw-binding"]
     },
     "spdlog"
   ]

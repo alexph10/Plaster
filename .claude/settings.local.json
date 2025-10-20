@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\Users\\Admin\\Plaster\\src\" /b /s)",
+      "WebSearch",
+      "WebFetch(domain:plastiboo.tumblr.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:zar67.github.io)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

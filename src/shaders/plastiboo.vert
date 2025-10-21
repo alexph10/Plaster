@@ -3,8 +3,8 @@
 
 layout(location = 0) in vec3 inPosition;
 layout(location = 1) in vec3 inNormal;
-layout(location = 2) in vec3 inTexCoord;
-layout(location = 3) in vec4 inColor;
+layout(location = 2) in vec2 inTexCoord;
+layout(location = 3) in vec3 inColor;
 
 layout(set = 0, binding = 0) uniform CameraUBO {
   mat4 view;
@@ -38,7 +38,7 @@ vec3 snapToGrid(vec3 pos, float gridSize) {
 vec3 calculateVertexLighting(vec3 worldPos, vec3 normal) {
   vec3 lighting = vec3(0.15, 0.12, 0.10);
 
-  for(int 1 = 0; i < lights.numLights; i++) {
+  for(int i = 0; i < lights.numLights; i++) {
     vec3 lightPos = lights.positions[i].xyz;
     float lightIntensity = lights.positions[i].w;
     vec3 lightColor = lights.colors[i].rgb;
@@ -72,7 +72,7 @@ void main() {
 
   fragDepth = clipPos.w;
   
-  fragTexCoord = inTexCoord * clipPos.w;
+  fragTexCoord = inTexCoord.xy * clipPos.w;
   
   fragColor = inColor;
   

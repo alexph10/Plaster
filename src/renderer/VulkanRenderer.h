@@ -1,12 +1,20 @@
 #pragma once
 
 #include <vulkan/vulkan.h>
+#include <vk_mem_alloc.h>
 #include <vector>
 #include <optional>
 #include <memory>
 #include "../ui/ImGuiManager.h"
+#include "DescriptorManager.h"
+#include "VulkanBuffer.h"
+#include "UniformBuffers.h"
 
 class Window;
+
+namespace Plaster {
+    class Scene;
+}
 
 struct QueueFamilyIndices {
     std::optional<uint32_t> graphicsFamily;
@@ -31,8 +39,15 @@ public:
     void initialize(const Window& window);
     void cleanup();
     void drawFrame();
+    void renderScene(Plaster::Scene& scene);
 
     bool isInitialized() const { return _initialized; }
+
+    VkDevice getDevice() const { return _device; }
+    VkPhysicalDevice getPhysicalDevice() const { return _physicalDevice; }
+    VkCommandPool getCommandPool() const { return _commandPool; }
+    VkQueue getGraphicsQueue() const { return _graphicsQueue; }
+    VmaAllocator getAllocator() const { return _allocator; }
 
 private:
     // Core Vulkan objects
@@ -72,9 +87,28 @@ private:
 
     bool _initialized = false;
     const Window* _window = nullptr;
-    
+
     // ImGui Manager
     ImGuiManager _imguiManager;
+
+    // VMA Allocator
+    VmaAllocator _allocator = VK_NULL_HANDLE;
+
+    // Plaster rendering components
+    Plaster::DescriptorManager _descriptorManager;
+
+    // Uniform buffers (per frame)
+    std::vector<Plaster::VulkanBuffer> _cameraBuffers;
+    std::vector<Plaster::VulkanBuffer> _lightBuffers;
+    std::vector<Plaster::VulkanBuffer> _objectBuffers;
+
+    // Descriptor sets (per frame)
+    std::vector<VkDescriptorSet> _cameraDescriptorSets;
+    std::vector<VkDescriptorSet> _objectDescriptorSets;
+    std::vector<VkDescriptorSet> _materialDescriptorSets;
+
+    // Scene being rendered
+    Plaster::Scene* _currentScene = nullptr;
 
     // Validation layers
 #ifdef NDEBUG
@@ -96,9 +130,11 @@ private:
     void createSurface();
     void pickPhysicalDevice();
     void createLogicalDevice();
+    void createAllocator();
     void createSwapChain();
     void createImageViews();
     void createRenderPass();
+    void createDescriptorResources();
     void createGraphicsPipeline();
     void createFramebuffers();
     void createCommandPool();

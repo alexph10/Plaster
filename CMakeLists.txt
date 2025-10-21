@@ -28,6 +28,7 @@ find_package(glfw3 CONFIG REQUIRED)
 find_package(glm CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(imgui CONFIG REQUIRED)
+find_package(VulkanMemoryAllocator CONFIG REQUIRED)
 
 # Core source files
 file(GLOB_RECURSE SOURCES 
@@ -57,6 +58,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     glm::glm
     spdlog::spdlog
     imgui::imgui
+    GPUOpen::VulkanMemoryAllocator
 )
 
 # Set VS debugger working directory
